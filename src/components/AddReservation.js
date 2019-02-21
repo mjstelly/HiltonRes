@@ -16,17 +16,20 @@ Date: 20 Feb 2019
 
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import { Container, Content } from 'native-base'
+import { Container, Content, Form, Item, Input } from 'native-base'
 
+const styles = StyleSheet.create({
+
+})
 
 class AddReservation extends Component {
     constructor(props) {
         super(props)
     }
+
     render() {
         return (
             <Container>
-                <Header />
                 <Content>
                     <Form>
                         <Item>
