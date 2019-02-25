@@ -3,8 +3,10 @@ import AddReservation from './src/components/AddReservation'
 import ListReservations from './src/components/ListReservations'
 
 const AppNavigator = createStackNavigator({
-    add: { screen: AddReservation },
-    list: { screen: ListReservations},
-})
+    list: { screen: ListReservations },
+    add: { screen: AddReservation }
 
-  export default createAppContainer(AppNavigator)
+}
+)
+
+export default createAppContainer(AppNavigator)

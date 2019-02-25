@@ -1,34 +1,40 @@
 {
-  "name": "HiltonRes",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
-  },
-  "dependencies": {
-    "mobx-react": "^5.4.3",
-    "native-base": "^2.11.0",
-    "react": "16.6.3",
-    "react-native": "0.58.5",
-    "react-native-elements": "^1.0.0",
-    "react-native-gesture-handler": "^1.0.15",
-    "react-native-vector-icons": "^6.3.0",
-    "react-navigation": "^3.3.0"
-  },
-  "devDependencies": {
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "24.1.0",
-    "eslint": "^5.14.1",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4",
-    "jest": "24.1.0",
-    "metro-react-native-babel-preset": "0.52.0",
-    "react-test-renderer": "16.6.3"
-  },
-  "jest": {
-    "preset": "react-native"
-  }
+    "name": "HiltonRes",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node node_modules/react-native/local-cli/cli.js start",
+        "test": "jest",
+        "clear-cache": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf $TMPDIR/haste-map-react-native-packager-*",
+        "nuke-build": "rm -rf node_modules && rm -rf ios/build && rm -rf android/app/build"
+    },
+    "dependencies": {
+        "apollo-boost": "^0.1.28",
+        "graphql": "^14.1.1",
+        "mobx-react": "^5.4.3",
+        "native-base": "^2.11.0",
+        "react": "16.6.3",
+        "react-apollo": "^2.4.1",
+        "react-native": "0.58.5",
+        "react-native-elements": "^1.0.0",
+        "react-native-gesture-handler": "^1.0.15",
+        "react-native-vector-icons": "^6.3.0",
+        "react-navigation": "^3.3.0"
+    },
+    "devDependencies": {
+        "babel-core": "^7.0.0-bridge.0",
+        "babel-jest": "24.1.0",
+        "eslint": "^5.14.1",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-google": "^0.12.0",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-react": "^7.12.4",
+        "jest": "24.1.0",
+        "metro-react-native-babel-preset": "0.52.0",
+        "react-test-renderer": "16.6.3"
+    },
+    "jest": {
+        "preset": "react-native"
+    }
 }

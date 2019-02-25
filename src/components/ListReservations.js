@@ -1,6 +1,6 @@
 /*
-@module /components//AddReservation
-@description Allow a user to book a reservation
+@module /components/ListReservations
+@description Display a list of existing reservations
 
 List all props here -------
 @param description
@@ -15,22 +15,79 @@ Date: 20 Feb 2019
 */
 
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
-import { Container} from 'native-base'
+import { FlatList, StyleSheet, Text } from 'react-native'
+import { Container } from 'native-base'
 
-const styles = StyleSheet.create({
+// import { ApolloProvider, Query } from 'react-apollo'
+// import ApolloClient from 'apollo-boost'
+// import gql from 'graphql-tag'
 
-})
+// const client = new ApolloClient({
+//     uri: 'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev'
+// })
+
+const Reservations = () => {
+
+    return <Text>Reservation module</Text>
+    // <ApolloProvider client={client}>
+    //     <Query
+    //         query={gql`
+    //     {
+    //         reservations {
+    //             id
+    //             name
+    //             hotelName
+    //             arrivalDate
+    //             departureDate
+    //         }
+    //     }
+    // `}>
+    //         {({ loading, error, data }) => {
+    //             if (loading) return <Text>Loading...</Text>;
+    //             if (error) return <Text>Error :(</Text>;
+
+    //             return data.reservations.map(({ id, name, hotelName }) => (
+    //                 <View key={id}>
+    //                     <Text>{name}: {hotelName}</Text>
+    //                 </View>
+    //             ));
+    //         }}
+    //     </Query>
+    // </ApolloProvider>
+}
 
 class ListReservations extends Component {
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         return (
             <Container>
-                <Text>ListReservations</Text>
+                <Text>List Reservations</Text>
+                {/* {this.Reservations} */}
+                <ApolloProvider client={client}>
+                    <Query
+                        query={gql`
+        {
+            reservations {
+                id
+                name
+                hotelName
+                arrivalDate
+                departureDate
+            }
+        }
+    `}>
+                        {({ loading, error, data }) => {
+                            if (loading) return <Text>Loading...</Text>;
+                            if (error) return <Text>Error :(</Text>;
+
+                            // return data.reservations.map(({ id, name, hotelName }) => (
+                            //     <View key={id}>
+                            //         <Text>{name}: {hotelName}</Text>
+                            //     </View>
+                            // ));
+                        }}
+                    </Query>
+                </ApolloProvider>
             </Container>
         )
     }

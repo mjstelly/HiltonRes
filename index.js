@@ -3,16 +3,15 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
-import { AppRegistry } from 'react-native';
-import App from './App';
-import { name as appName } from './app.json';
+import { AppRegistry, YellowBox } from 'react-native'
+import App from './App'
+import { name as appName } from './app.json'
+
 
 if (__DEV__) {
-    console.ignoredYellowBox = [
-        'Remote debugger',
+    YellowBox.ignoreWarnings(['Remote debugger',
         'Warning: isMounted(...) is deprecated',
-        'Module RCTImageLoader'
-    ]
+        'Module RCTImageLoader'])
 }
 
 AppRegistry.registerComponent(appName, () => App)
