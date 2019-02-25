@@ -15,82 +15,55 @@ Date: 20 Feb 2019
 */
 
 import React, { Component } from 'react'
-import { FlatList, StyleSheet, Text } from 'react-native'
+import { Text } from 'react-native'
 import { Container } from 'native-base'
+import { ApolloProvider, graphql } from 'react-apollo';
+import ApolloClient from 'apollo-boost'
+import gql from 'graphql-tag'
 
-// import { ApolloProvider, Query } from 'react-apollo'
-// import ApolloClient from 'apollo-boost'
-// import gql from 'graphql-tag'
+const client = new ApolloClient({
+  link: new HttpLink({
+    uri: 'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev'
+  }),
+  cache: new InMemoryCache()
+});
 
-// const client = new ApolloClient({
-//     uri: 'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev'
-// })
+const resQuery = gql`
+  {
+    reservations {
+        id
+        name
+        hotelName
+        arrivalDate
+        departureDate
+    }
+  }
+`
 
-const Reservations = () => {
+const Reservations = graphql(resQuery)(props => {
+  const { error, reservations } = props.data;
+  if (error) {
+    return <Text>{error}</Text>;
+  }
+  if (dogs) {
+    return <Text>{reservations[0].hotelName}</Text>;
+  }
 
-    return <Text>Reservation module</Text>
-    // <ApolloProvider client={client}>
-    //     <Query
-    //         query={gql`
-    //     {
-    //         reservations {
-    //             id
-    //             name
-    //             hotelName
-    //             arrivalDate
-    //             departureDate
-    //         }
-    //     }
-    // `}>
-    //         {({ loading, error, data }) => {
-    //             if (loading) return <Text>Loading...</Text>;
-    //             if (error) return <Text>Error :(</Text>;
-
-    //             return data.reservations.map(({ id, name, hotelName }) => (
-    //                 <View key={id}>
-    //                     <Text>{name}: {hotelName}</Text>
-    //                 </View>
-    //             ));
-    //         }}
-    //     </Query>
-    // </ApolloProvider>
-}
+  return <Text>Loading...</Text>;
+});
 
 class ListReservations extends Component {
 
-    render() {
-        return (
-            <Container>
-                <Text>List Reservations</Text>
-                {/* {this.Reservations} */}
-                <ApolloProvider client={client}>
-                    <Query
-                        query={gql`
-        {
-            reservations {
-                id
-                name
-                hotelName
-                arrivalDate
-                departureDate
-            }
-        }
-    `}>
-                        {({ loading, error, data }) => {
-                            if (loading) return <Text>Loading...</Text>;
-                            if (error) return <Text>Error :(</Text>;
-
-                            // return data.reservations.map(({ id, name, hotelName }) => (
-                            //     <View key={id}>
-                            //         <Text>{name}: {hotelName}</Text>
-                            //     </View>
-                            // ));
-                        }}
-                    </Query>
-                </ApolloProvider>
-            </Container>
-        )
-    }
+  render() {
+    return (
+      <Container>
+        <ApolloProvider client={client}>
+          <Text>List Reservations</Text>
+          <Reservations />
+        </ApolloProvider>
+      </Container >
+    )
+  }
 }
 
 
