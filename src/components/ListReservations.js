@@ -18,7 +18,7 @@ import React, { Component } from 'react'
 import { Text } from 'react-native'
 import { Container } from 'native-base'
 import { ApolloProvider, graphql } from 'react-apollo';
-import ApolloClient from 'apollo-boost'
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
 import gql from 'graphql-tag'
 
 const client = new ApolloClient({
@@ -45,7 +45,7 @@ const Reservations = graphql(resQuery)(props => {
   if (error) {
     return <Text>{error}</Text>;
   }
-  if (dogs) {
+  if (reservations) {
     return <Text>{reservations[0].hotelName}</Text>;
   }
 
@@ -65,6 +65,5 @@ class ListReservations extends Component {
     )
   }
 }
-
 
 export default ListReservations
