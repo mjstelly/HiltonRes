@@ -14,46 +14,60 @@ List all props here -------
 Date: 20 Feb 2019
 */
 
-import React, { Component } from 'react'
-import { Text } from 'react-native'
-import { Container } from 'native-base'
+import React, { Component } from 'react';
+import { FlatList, Text } from 'react-native';
+import { Container } from 'native-base';
 import { ApolloProvider, graphql } from 'react-apollo';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
-import gql from 'graphql-tag'
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev'
+    uri:
+      'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev',
   }),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 const resQuery = gql`
   {
     reservations {
-        id
-        name
-        hotelName
-        arrivalDate
-        departureDate
+      id
+      name
+      hotelName
+      arrivalDate
+      departureDate
     }
   }
-`
+`;
 
-const Reservations = graphql(resQuery)(props => {
+const ReservationList = (props) => {
+  const resArray = Object.entries(props);
+  console.log('resArray', resArray);
+  if (props) {
+    return (
+      <FlatList
+        data={resArray[0][1]}
+        renderItem={({ item }) => <Text>{item.hotelName}</Text>}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    );
+  }
+};
+
+const Reservations = graphql(resQuery)((props) => {
   const { error, reservations } = props.data;
   if (error) {
     return <Text>{error}</Text>;
   }
   if (reservations) {
-    return <Text>{reservations[0].hotelName}</Text>;
+    return <ReservationList props={reservations} />;
   }
 
   return <Text>Loading...</Text>;
 });
 
 class ListReservations extends Component {
-
   render() {
     return (
       <Container>
@@ -61,9 +75,9 @@ class ListReservations extends Component {
           <Text>List Reservations</Text>
           <Reservations />
         </ApolloProvider>
-      </Container >
-    )
+      </Container>
+    );
   }
 }
 
-export default ListReservations
+export default ListReservations;
