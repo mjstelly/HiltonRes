@@ -14,12 +14,13 @@ List all props here -------
 Date: 20 Feb 2019
 */
 
-import React, { Component } from 'react';
-import { FlatList, Text } from 'react-native';
+import React, { PureComponent } from 'react';
+import { FlatList, Text, View } from 'react-native';
 import { Container } from 'native-base';
 import { ApolloProvider, graphql } from 'react-apollo';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import gql from 'graphql-tag';
+// import console from 'console';
 
 const client = new ApolloClient({
   link: new HttpLink({
@@ -41,14 +42,29 @@ const resQuery = gql`
   }
 `;
 
+const Reservation = (props) => {
+  // console.log(props.props);
+  const { name, hotelName } = props.props;
+  return (
+    <View
+      style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}
+    >
+      <Text>Name: {name}</Text>
+      <Text>Hotel: {hotelName}</Text>
+    </View>
+  );
+};
+const toArray = (obj) => {
+  return Object.entries(obj);
+};
+
 const ReservationList = (props) => {
-  const resArray = Object.entries(props);
-  console.log('resArray', resArray);
   if (props) {
+    const resArray = toArray(props);
     return (
       <FlatList
         data={resArray[0][1]}
-        renderItem={({ item }) => <Text>{item.hotelName}</Text>}
+        renderItem={({ item }) => <Reservation props={item} />}
         keyExtractor={(item, index) => index.toString()}
       />
     );
@@ -67,7 +83,7 @@ const Reservations = graphql(resQuery)((props) => {
   return <Text>Loading...</Text>;
 });
 
-class ListReservations extends Component {
+class ListReservations extends PureComponent {
   render() {
     return (
       <Container>
