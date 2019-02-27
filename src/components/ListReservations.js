@@ -14,21 +14,21 @@ List all props here -------
 Date: 20 Feb 2019
 */
 
-import React, { PureComponent } from 'react';
-import { FlatList, Text, View } from 'react-native';
-import { Container } from 'native-base';
-import { ApolloProvider, graphql } from 'react-apollo';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
-import gql from 'graphql-tag';
-// import console from 'console';
+import React, { PureComponent } from 'react'
+import { FlatList, Text, View } from 'react-native'
+import { Container } from 'native-base'
+import { ApolloProvider, graphql } from 'react-apollo'
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
+import gql from 'graphql-tag'
+import PropTypes from 'prop-types'
 
 const client = new ApolloClient({
   link: new HttpLink({
     uri:
-      'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev',
+      'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev'
   }),
-  cache: new InMemoryCache(),
-});
+  cache: new InMemoryCache()
+})
 
 const resQuery = gql`
   {
@@ -40,11 +40,11 @@ const resQuery = gql`
       departureDate
     }
   }
-`;
+`
 
 const Reservation = (props) => {
   // console.log(props.props);
-  const { name, hotelName } = props.props;
+  const { name, hotelName } = props.props
   return (
     <View
       style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}
@@ -52,36 +52,36 @@ const Reservation = (props) => {
       <Text>Name: {name}</Text>
       <Text>Hotel: {hotelName}</Text>
     </View>
-  );
-};
+  )
+}
 const toArray = (obj) => {
-  return Object.entries(obj);
-};
+  return Object.entries(obj)
+}
 
 const ReservationList = (props) => {
   if (props) {
-    const resArray = toArray(props);
+    const resArray = toArray(props)
     return (
       <FlatList
         data={resArray[0][1]}
         renderItem={({ item }) => <Reservation props={item} />}
         keyExtractor={(item, index) => index.toString()}
       />
-    );
+    )
   }
-};
+}
 
 const Reservations = graphql(resQuery)((props) => {
-  const { error, reservations } = props.data;
+  const { error, reservations } = props.data
   if (error) {
-    return <Text>{error}</Text>;
+    return <Text>{error}</Text>
   }
   if (reservations) {
-    return <ReservationList props={reservations} />;
+    return <ReservationList props={reservations} />
   }
 
-  return <Text>Loading...</Text>;
-});
+  return <Text>Loading...</Text>
+})
 
 class ListReservations extends PureComponent {
   render() {
@@ -92,8 +92,8 @@ class ListReservations extends PureComponent {
           <Reservations />
         </ApolloProvider>
       </Container>
-    );
+    )
   }
 }
 
-export default ListReservations;
+export default ListReservations
