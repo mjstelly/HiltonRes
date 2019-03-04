@@ -17,18 +17,9 @@ Date: 20 Feb 2019
 import React, { PureComponent } from 'react'
 import { FlatList, Text, View } from 'react-native'
 import { Container } from 'native-base'
-import { ApolloProvider, graphql } from 'react-apollo'
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri:
-      'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev'
-  }),
-  cache: new InMemoryCache()
-})
 
 const resQuery = gql`
   {
@@ -87,10 +78,8 @@ class ListReservations extends PureComponent {
   render() {
     return (
       <Container>
-        <ApolloProvider client={client}>
-          <Text>List Reservations</Text>
-          <Reservations />
-        </ApolloProvider>
+        <Text>List Reservations</Text>
+        <Reservations />
       </Container>
     )
   }

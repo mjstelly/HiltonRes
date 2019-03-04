@@ -41,12 +41,13 @@ const DateSelector = () => {
   )
 }
 
-reservation = {
-  name: '',
-  hotelName: '',
-  arrivalDate: '',
-  departureDate: ''
-}
+// reservation = {
+//   name: '',
+//   hotelName: '',
+//   arrivalDate: '',
+//   departureDate: ''
+// }
+
 const CREATE_RESERVATION = gql`
   mutation createReservation($res: ReservationCreateInput!) {
     createReservation(data: $res) {
@@ -65,19 +66,20 @@ class AddReservation extends Component {
   setDate = (newDate) => {
     this.setState({ chosenDate: newDate })
   }
+
   render() {
     return (
       <Container>
         <Content>
-          <Mutation mutation={CREATE_RESERVATION}>
-            {(createReservation, { data })} => (
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault()
-                createReservation({ variables: { type: input.value } })
-                input.value = ''
-              }}
-            >
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault()
+              createReservation({ variables: { type: input.value } })
+              input.value = ''
+            }}
+          >
+            <Mutation mutation={CREATE_RESERVATION}>
+              {(createReservation, { data })} => (
               <Item>
                 <Input placeholder="Name" />
               </Item>
@@ -90,9 +92,9 @@ class AddReservation extends Component {
               <Item last>
                 <DateSelector />
               </Item>
-            </Form>
-            )
-          </Mutation>
+              )
+            </Mutation>
+          </Form>
         </Content>
       </Container>
     )
