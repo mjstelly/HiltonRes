@@ -1,5 +1,5 @@
 /*
-@module /components//AddReservation
+@module /components/AddReservation
 @description Allow a user to book a reservation
 
 List all props here -------
@@ -16,7 +16,15 @@ Date: 20 Feb 2019
 
 import React, { Component } from 'react'
 import { StyleSheet, Text } from 'react-native'
-import { Container, Content, DatePicker, Form, Item, Input } from 'native-base'
+import {
+  Button,
+  Container,
+  Content,
+  DatePicker,
+  Form,
+  Item,
+  Input
+} from 'native-base'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 
@@ -41,13 +49,6 @@ const DateSelector = () => {
   )
 }
 
-// reservation = {
-//   name: '',
-//   hotelName: '',
-//   arrivalDate: '',
-//   departureDate: ''
-// }
-
 const CREATE_RESERVATION = gql`
   mutation createReservation($res: ReservationCreateInput!) {
     createReservation(data: $res) {
@@ -71,30 +72,32 @@ class AddReservation extends Component {
     return (
       <Container>
         <Content>
-          <Form
-            onSubmit={(e) => {
-              e.preventDefault()
-              createReservation({ variables: { type: input.value } })
-              input.value = ''
-            }}
-          >
-            <Mutation mutation={CREATE_RESERVATION}>
-              {(createReservation, { data })} => (
-              <Item>
-                <Input placeholder="Name" />
-              </Item>
-              <Item last>
-                <Input placeholder="Hotel Name" />
-              </Item>
-              <Item>
-                <DateSelector />
-              </Item>
-              <Item last>
-                <DateSelector />
-              </Item>
-              )
-            </Mutation>
-          </Form>
+          <Mutation mutation={CREATE_RESERVATION}>
+            {(createReservation, { data }) => (
+              <Form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  createReservation({ data })
+                }}
+              >
+                <Item>
+                  <Input placeholder="Name" />
+                </Item>
+                <Item>
+                  <Input placeholder="Hotel Name" />
+                </Item>
+                <Item>
+                  <DateSelector />
+                </Item>
+                <Item last>
+                  <DateSelector />
+                </Item>
+                <Button full primary type="submit">
+                  <Text>Submit</Text>
+                </Button>
+              </Form>
+            )}
+          </Mutation>
         </Content>
       </Container>
     )
