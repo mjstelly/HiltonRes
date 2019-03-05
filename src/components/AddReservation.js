@@ -1,5 +1,5 @@
 /*
-@module /components//AddReservation
+@module /components/AddReservation
 @description Allow a user to book a reservation
 
 List all props here -------
@@ -71,15 +71,15 @@ class AddReservation extends Component {
     return (
       <Container>
         <Content>
-          <Form
-            onSubmit={(e) => {
-              e.preventDefault()
-              createReservation({ variables: { type: input.value } })
-              input.value = ''
-            }}
-          >
-            <Mutation mutation={CREATE_RESERVATION}>
-              {(createReservation, { data })} => (
+          <Mutation mutation={CREATE_RESERVATION}>
+            {(createReservation, { data })} => (
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault()
+                createReservation({ variables: { type: input.value } })
+                input.value = ''
+              }}
+            >
               <Item>
                 <Input placeholder="Name" />
               </Item>
@@ -93,8 +93,8 @@ class AddReservation extends Component {
                 <DateSelector />
               </Item>
               )
-            </Mutation>
-          </Form>
+            </Form>
+          </Mutation>
         </Content>
       </Container>
     )
