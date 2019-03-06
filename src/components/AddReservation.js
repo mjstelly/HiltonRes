@@ -16,17 +16,10 @@ Date: 20 Feb 2019
 
 import React, { Component } from 'react'
 import { StyleSheet, Text } from 'react-native'
-import {
-  Button,
-  Container,
-  Content,
-  DatePicker,
-  Form,
-  Item,
-  Input
-} from 'native-base'
+import { Button, Container, Content, DatePicker, Item } from 'native-base'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
+import { Formik } from 'formik'
 
 const styles = StyleSheet.create({})
 
@@ -74,28 +67,45 @@ class AddReservation extends Component {
         <Content>
           <Mutation mutation={CREATE_RESERVATION}>
             {(createReservation, { data }) => (
-              <Form
+              <Formik
                 onSubmit={(e) => {
                   e.preventDefault()
                   createReservation({ data })
                 }}
+                initialValues={{
+                  name: '',
+                  hotelName: '',
+                  arrivalDate: '',
+                  departureDate: ''
+                }}
               >
-                <Item>
-                  <Input placeholder="Name" />
-                </Item>
-                <Item>
-                  <Input placeholder="Hotel Name" />
-                </Item>
-                <Item>
-                  <DateSelector />
-                </Item>
-                <Item last>
-                  <DateSelector />
-                </Item>
-                <Button full primary type="submit">
-                  <Text>Submit</Text>
-                </Button>
-              </Form>
+                {(props) => (
+                  <Form>
+                    <Item
+                      name="name"
+                      onChangeText={props.handleChange('name')}
+                      onBlur={props.handleBlur('name')}
+                    >
+                      <Input placeholder="Name" />
+                    </Item>
+                    <Item
+                      onChangeText={props.handleChange('name')}
+                      onBlur={props.handleBlur('name')}
+                    >
+                      <Input placeholder="Hotel Name" />
+                    </Item>
+                    <Item>
+                      <DateSelector />
+                    </Item>
+                    <Item>
+                      <DateSelector />
+                    </Item>
+                    <Button full primary>
+                      <Text>Submit</Text>
+                    </Button>
+                  </Form>
+                )}
+              </Formik>
             )}
           </Mutation>
         </Content>
