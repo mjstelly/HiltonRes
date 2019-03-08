@@ -15,11 +15,20 @@ Date: 20 Feb 2019
 */
 
 import React, { Component } from 'react'
-import { StyleSheet, Text } from 'react-native'
-import { Button, Container, Content, DatePicker, Item } from 'native-base'
+import { StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  Button,
+  Container,
+  Content,
+  DatePicker,
+  Form,
+  Input,
+  Item
+} from 'native-base'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { Formik } from 'formik'
+import * as yup from 'yup'
 
 const styles = StyleSheet.create({})
 
@@ -41,6 +50,22 @@ const DateSelector = () => {
     />
   )
 }
+const reservationSchema = yup.object().shape({
+  name: yup.string().required('Guest name required'),
+  hotelName: yup.string().required('Hotel Name is required'),
+  arrivalDate: yup
+    .date()
+    .required('Arrival Date is required')
+    .default(function() {
+      return new Date()
+    }),
+  departureDate: yup
+    .date()
+    .required('Departure Date is required')
+    .default(function() {
+      return new Date()
+    })
+})
 
 const CREATE_RESERVATION = gql`
   mutation createReservation($res: ReservationCreateInput!) {
@@ -68,8 +93,8 @@ class AddReservation extends Component {
           <Mutation mutation={CREATE_RESERVATION}>
             {(createReservation, { data }) => (
               <Formik
-                onSubmit={(e) => {
-                  e.preventDefault()
+                validationSchema={reservationSchema}
+                onSubmit={() => {
                   createReservation({ data })
                 }}
                 initialValues={{
@@ -79,32 +104,29 @@ class AddReservation extends Component {
                   departureDate: ''
                 }}
               >
-                {(props) => (
-                  <Form>
-                    <Item
-                      name="name"
-                      onChangeText={props.handleChange('name')}
-                      onBlur={props.handleBlur('name')}
-                    >
-                      <Input placeholder="Name" />
-                    </Item>
-                    <Item
-                      onChangeText={props.handleChange('name')}
-                      onBlur={props.handleBlur('name')}
-                    >
-                      <Input placeholder="Hotel Name" />
-                    </Item>
-                    <Item>
+                {(props) => {
+                  return (
+                    <Form>
+                      <Item
+                        onChangeText={props.handleChange('name')}
+                        onBlur={props.handleBlur('name')}
+                      >
+                        <Input placeholder="Enter Name" />
+                      </Item>
+                      <Item
+                        onChangeText={props.handleChange('hotelName')}
+                        onBlur={props.handleBlur('hotelName')}
+                      >
+                        <Input placeholder="Enter Hotel Name" />
+                      </Item>
                       <DateSelector />
-                    </Item>
-                    <Item>
                       <DateSelector />
-                    </Item>
-                    <Button full primary>
-                      <Text>Submit</Text>
-                    </Button>
-                  </Form>
-                )}
+                      <Button full primary>
+                        <Text>Submit</Text>
+                      </Button>
+                    </Form>
+                  )
+                }}
               </Formik>
             )}
           </Mutation>
