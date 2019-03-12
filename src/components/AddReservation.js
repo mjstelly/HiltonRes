@@ -29,7 +29,6 @@ import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { Formik } from 'formik'
 import * as yup from 'yup'
-// import console from 'console'
 
 const styles = StyleSheet.create({})
 
