@@ -15,20 +15,21 @@ Date: 20 Feb 2019
 */
 
 import React, { Component } from 'react'
-import { Alert, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import {
-  Button,
+  // Button,
   Container,
   Content,
-  DatePicker,
-  Form,
-  Input,
-  Item
+  DatePicker
+  // Form,
+  // Input,
+  // Item
 } from 'native-base'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { Formik } from 'formik'
 import * as yup from 'yup'
+// import console from 'console'
 
 const styles = StyleSheet.create({})
 
@@ -38,6 +39,7 @@ const DateSelector = () => {
       defaultDate={new Date()}
       minimumDate={new Date()}
       locale={'en'}
+      timeZoneOffsetInMinutes={undefined}
       modalTransparent={false}
       animationType={'fade'}
       androidMode={'default'}
@@ -93,13 +95,9 @@ class AddReservation extends Component {
             {(createReservation, { data }) => (
               <Formik
                 validationSchema={reservationSchema}
-                // onSubmit={() => {
-                //   createReservation({ data })
-                //   Alert.alert('onSubmit')
-                // }}
-                onSubmit={(values) => {
-                  // setSubmitting(false)
-                  return console.log(values)
+                onSubmit={(data) => {
+                  // createReservation({ data })
+                  console.log(data)
                 }}
                 initialValues={{
                   name: '',
@@ -110,26 +108,21 @@ class AddReservation extends Component {
               >
                 {(props) => {
                   return (
-                    <Form>
-                      <Item
+                    <View>
+                      <TextInput
                         onChangeText={props.handleChange('name')}
                         onBlur={props.handleBlur('name')}
-                      >
-                        <Input placeholder="Enter Name" />
-                      </Item>
-                      <Item
+                        placeholder="Enter Name"
+                      />
+                      <TextInput
+                        placeholder="Enter Hotel Name"
                         onChangeText={props.handleChange('hotelName')}
                         onBlur={props.handleBlur('hotelName')}
-                      >
-                        <Input placeholder="Enter Hotel Name" />
-                      </Item>
+                      />
                       <DateSelector />
                       <DateSelector />
-                      <Button full primary onPress={props.handleSubmit}>
-                        {/* <Button full primary onPress={() => console.log(props)}> */}
-                        <Text>Submit</Text>
-                      </Button>
-                    </Form>
+                      <Button title="Submit" onPress={props.handleSubmit} />
+                    </View>
                   )
                 }}
               </Formik>
