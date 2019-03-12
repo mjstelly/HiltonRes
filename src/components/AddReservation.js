@@ -15,16 +15,8 @@ Date: 20 Feb 2019
 */
 
 import React, { Component } from 'react'
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
-import {
-  // Button,
-  Container,
-  Content,
-  DatePicker
-  // Form,
-  // Input,
-  // Item
-} from 'native-base'
+import { Button, StyleSheet, TextInput, View } from 'react-native'
+import { Container, Content, DatePicker } from 'native-base'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { Formik } from 'formik'
