@@ -1,0 +1,6 @@
+framework module Pods_HiltonResTests {
+  umbrella header "Pods-HiltonResTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

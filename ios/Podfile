@@ -1,0 +1,47 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'HiltonRes' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+# require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+react_native_path = "../node_modules/react-native"
+
+  pod 'React', :path => "#{react_native_path}", :subspecs => [
+    'Core',
+    'CxxBridge',
+    'DevSupport',
+    'RCTText',
+    'RCTNetwork',
+    'RCTImage',
+    'RCTWebSocket',
+    'RCTActionSheet',
+    'RCTAnimation',
+    'RCTBlob',
+    'RCTLinking',
+    'RCTNetwork',
+    'RCTSettings',
+    'RCTText',
+    'RCTWebSocket',
+  ]
+
+  pod 'React-fishhook', :path => '../node_modules/react-native/Libraries/fishhook'
+  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
+  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
+  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
+  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+
+  # Pods for HiltonRes
+
+  target 'HiltonResTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
